@@ -1,0 +1,98 @@
+{
+	"info": {
+		"_postman_id": "362958d8-410e-4b5b-1887-dd146c1cc737",
+		"name": "TestCollection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Store Amount 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cd78113d-a6a7-4dd4-a8ba-ee3e02787d8f",
+						"exec": [
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"success\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"metricDropdown\":\"Store Amount Metric\",\r\n\t\"storeNo\":\"\",\r\n\t\"startDate\":\"2020-02-11\",\r\n\t\"endDate\":\"2020-02-13\"\r\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}:{{port}}/queryStoreAmtData",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"queryStoreAmtData"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Store Amount 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody)\r",
+							"tests[\"Result code: OK is present\"]=jsonData.status === \"success\"\r",
+							"",
+							"",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"metricDropdown\":\"Store Amount Metric\",\r\n\t\"storeNo\":{{store}},\r\n\t\"startDate\":\"2020-02-11\",\r\n\t\"endDate\":\"2020-02-13\"\r\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}:{{port}}/queryStoreAmtData",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"queryStoreAmtData"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
